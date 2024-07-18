@@ -27,29 +27,66 @@ Secure/Locate - Find something amidst a large horde of zombies
 Boss Fight - Hell yeah
 
 Level Types:
-Defend - Defend an objective. 2 per chapter.
-Break - Destroy one or more objectives (usually a hive that spawns zombies). 1 per chapter.
-Establish - Establish structures and defend them from zombies. 1 per chapter.
-Secure - Find items. 1 per chapter.
+Defend - Defend an objective. 
+Break - Destroy one or more objectives (usually a hive that spawns zombies).
+Establish - Establish structures and defend them from zombies. 
+Locate - Find an objective and defend it.
+Secure - Locate items.
 Boss Fight - Fight a boss. 1 per chapter, always as the final level.
+Eliminate - Get a specific number of kills before time runs out.
+Bounty - Kill a certain amount of a certain type of zombie. 
+(aka: "Eliminate 100 zombies.", "Eliminate 10 Crazy Zombies", "Eliminate 50 Strong Zombies", etc.)
+Payload - Escort something, somewhere.
 
-Bounty - Kill a certain amount of a certain type of zombie. (aka: "Eliminate 100 zombies.", "Eliminate 10 Crazy Zombies", "Eliminate 50 Strong Zombies", etc.)
+Level Title Ideas:
+"Never-Ending Bullet Blitz"
+"Don't Die"
+"Rip and Tear"
+"Nerves of Steel"
+"Don't Stop Now"
+"One at a Time"
+"Catfight"
+"Long-Term Survival"
+"
 
 Chapter 1 -
-  1. 
-  2.
-  3. It Only Gets Worse
-  4.
-  5.
-  6. 
-  7. 
+"Find out where you are, how you got there, and what's going on."
+  1. I'm Not Dead (Locate)
+After going under for a bio-energy stabilization experiment, you wake up to 
+an empty laboratory filled with the undead. Find out whats going on, and find the exit.
+    - Find the laboratory exit, defeat the horde, and leave.
+  2. They're All Dead (Payload)
+Before you exit the Lab, you find a scientist survivor. After he explains the situation, 
+and also explains that an unused Shelter exists nearby. Escort him to the Shelter safely.
+    - Defend your new scientist friend until you reach The Shelter.
+  3. It Only Gets Worse (Establish)
+After reaching the shelter, you find that the security matrix has decayed substantially. 
+Re-Establish and defend your new security matrix against the undead infestation.
+    - Re-Establish the secutiy matrix of the Shelter, and defend it against an infestation of zombies.
+  4. A Home in the Heart of the Horde (Defend)
+Whilst the finishing processes of the security matrix are installing, it releases a Bio-Energy signal that attracts a lot of zombies. 
+Defend the Shelter until the security matrix installation process is finalized.
+    - Defend the Shelter.
+  5. Nobody's Gonna Need This... Right? (Secure)
+Jeffrey wants to run tests, but needs data and equipment from the lab to do it. Secure all items Jeffrey needs.
+    - Secure a list of testing items.
+  6. Exterminate the Hives (Destroy)
+    - Destroy the hives interfering with Jeffrey's data tests.
+  7. Something's Wrong... (Eliminate)
+Jeffrey needs you to collect Bio-Energy data samples to find the properties of this strange Bio-Energy Mutation. 
+Kill as many Zombies as you can and collect their data.
+    - Kill 100 Zombies in 15 minutes or less.
   8.
   9.
-  10.
+  10. It's a... Mutant!
+Fight the Mutant, a zombie with stabilized Black Bio-Energy, making it far stronger.
 
-Chapter 1
-  11. 
-  12.
+Chapter 2
+"Team up with the other survivors to find out the anomaly causing the human population to become zombies."
+  11. Root of All Evil (Establish) 
+    - Establish Signal Tracers to locate and record data on the anomaly.
+  12. Calling All Non-Creeps! (Locate)
+    - Find Radio Towers and set them to broadcast a message inviting any and all survivors to your safe-haven.
   13.
   14.
   15.
