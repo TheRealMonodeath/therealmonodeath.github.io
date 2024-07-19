@@ -27,16 +27,16 @@ Secure/Locate - Find something amidst a large horde of zombies
 Boss Fight - Hell yeah
 
 Level Types:
-Defend - Defend an objective. 
-Break - Destroy one or more objectives (usually a hive that spawns zombies).
-Establish - Establish structures and defend them from zombies. 
-Locate - Find an objective and defend it.
-Secure - Locate items.
-Boss Fight - Fight a boss. 1 per chapter, always as the final level.
-Eliminate - Get a specific number of kills before time runs out.
-Bounty - Kill a certain amount of a certain type of zombie. 
+1. Defend - Defend one or more objectives. 
+2. Break - Destroy one or more objectives (usually a hive that spawns zombies).
+3. Establish - Establish structures and defend them from zombies. Requires you to both defend and progress the structure by building it.
+4. Locate - Find an objective and defend it.
+5. Secure - Locate objectives and interact with them.
+6. Eliminate - Get a specified number of kills before the time runs out. 
 (aka: "Eliminate 100 zombies.", "Eliminate 10 Crazy Zombies", "Eliminate 50 Strong Zombies", etc.)
-Payload - Escort something, somewhere.
+8. Payload - Escort something, somewhere.
+9. Survey - 
+10. Boss Fight - Fight a boss. 1 per chapter, always as the final level.
 
 Level Title Ideas:
 "Never-Ending Bullet Blitz"
@@ -76,7 +76,8 @@ Jeffrey wants to run tests, but needs data and equipment from the lab to do it. 
 Jeffrey needs you to collect Bio-Energy data samples to find the properties of this strange Bio-Energy Mutation. 
 Kill as many Zombies as you can and collect their data.
     - Kill 100 Zombies in 15 minutes or less.
-  8.
+  8. Power Surge! (Restock)
+    - Find Power Modules and add them to the Shelter's
   9.
   10. It's a... Mutant!
 Fight the Mutant, a zombie with stabilized Black Bio-Energy, making it far stronger.
