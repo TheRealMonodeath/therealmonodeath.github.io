@@ -8,13 +8,7 @@ Text - Stores text and text settings and loads it.
 
 All GUI elements can also have a prerequisite.
 
-
-
-Check inactive button and see if it's active
-If it is, then set the GUIID to it's ID and create a clone
-
-What exactly do I want to do?
-I want to find the data for the current gui menu
-check the prerequisites of all of them, and mark them as active if they are met and inactive if not met.
-Then create clones of all active elements.
-
+ok i did it, i made it display only active gui elements dont ask me how i did i just did it i was tired. i still am
+either way now we need to make prerequisites.
+prereqs require you to check each active gui and set it to inactive if its prerequisites are met
+prerequisites then require you to check each inactive gui (which we now know how to do) and set it to active if it's prerequisites are met.
