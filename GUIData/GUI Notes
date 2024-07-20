@@ -12,3 +12,7 @@ ok i did it, i made it display only active gui elements dont ask me how i did i 
 either way now we need to make prerequisites.
 prereqs require you to check each active gui and set it to inactive if its prerequisites are met
 prerequisites then require you to check each inactive gui (which we now know how to do) and set it to active if it's prerequisites are met.
+
+VAR/LIST
+EQUALS/ABOVE
+AMOUNT
