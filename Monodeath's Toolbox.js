@@ -135,9 +135,20 @@
                         },
                     },
                     {
-                        opcode: 'setJSONPathToValueNoQuotes',
+                        opcode: 'ValueNoQuotes',
                         blockType: Scratch.BlockType.REPORTER,
-                        text: 'Set value of [PATH] in [JSON_STRING] to [VALUE] without quotations',
+                        text: '[VALUE] without quotes',
+                        arguments: {
+                            VALUE: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'true',
+                            },
+                        },
+                    },
+                    {
+                        opcode: 'setJSONPathToValueNF',
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: 'Set value of [PATH] in [JSON_STRING] to [VALUE] without unnecessary JSON formatting',
                         arguments: {
                             PATH: {
                                 type: Scratch.ArgumentType.STRING,
@@ -149,7 +160,18 @@
                             },
                             VALUE: {
                                 type: Scratch.ArgumentType.STRING,
-                                defaultValue: '5',
+                                defaultValue: 'test',
+                            },
+                        },
+                    },
+                    {
+                        opcode: 'validateJSON',
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: 'validated [JSON_STRING]',
+                        arguments: {
+                            JSON_STRING: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: '{"fruit": {"apples": 2, bananas: 3}}',
                             },
                         },
                     },
@@ -276,34 +298,114 @@
         ValueAsStringNoNewline({ VALUE }) {
             return VALUE.replace(/\r?\n|\r/g, ' ').toString();
         }
-        setJSONPathToValueNoQuotes({ PATH, JSON_STRING, VALUE }) {
+        ValueNoQuotes({ VALUE }) {
+            // Remove any surrounding quotes from the VALUE
+            return VALUE.replace(/^"|"$/g, '');
+        }
+        setJSONPathToValueNF({ PATH, JSON_STRING, VALUE }) {
             try {
-                const path = PATH.toString().split('/').map(decodeURIComponent);
+                const path = PATH.split('/').map(decodeURIComponent);
                 let json;
                 try {
                     json = JSON.parse(JSON_STRING);
                 } catch (e) {
-                    return e.message;
+                    return `Error parsing JSON: ${e.message}`;
                 }
                 let obj = json;
                 for (let i = 0; i < path.length - 1; i++) {
                     if (!(path[i] in obj)) obj[path[i]] = {};
                     obj = obj[path[i]];
                 }
-                
-                // Parse VALUE correctly
-                let parsedValue;
-                try {
-                    parsedValue = JSON.parse(VALUE);
-                } catch (e) {
-                    parsedValue = VALUE;
+                // Set the value directly without quoting it
+                obj[path[path.length - 1]] = VALUE;
+
+                // Convert the updated JSON object to a plain text string
+                function objToPlainText(obj) {
+                    if (typeof obj === 'object' && obj !== null) {
+                        let str = '{';
+                        const keys = Object.keys(obj);
+                        for (let i = 0; i < keys.length; i++) {
+                            const key = keys[i];
+                            const value = obj[key];
+                            str += `"${key}": ${typeof value === 'object' ? objToPlainText(value) : value}`;
+                            if (i < keys.length - 1) str += ', ';
+                        }
+                        str += '}';
+                        return str;
+                    } else {
+                        return typeof obj === 'string' ? obj : String(obj);
+                    }
                 }
-                
-                obj[path[path.length - 1]] = parsedValue;
-                return JSON.stringify(json);
+
+                return objToPlainText(json);
             } catch (err) {
-                return '';
+                return `Error: ${err.message}`;
             }
+        }
+        validateJSON({
+            JSON_STRING
+        }) {
+            try {
+                const quotedJSON = this.quoteUnquotedValues(JSON_STRING);
+                return `${quotedJSON}`;
+            } catch (e) {
+                return `Error: ${e.message}`;
+            }
+        }
+
+        // Function to quote unquoted keys and values in the JSON string while preserving formatting
+        quoteUnquotedValues(jsonString) {
+            let result = '';
+            let insideString = false;
+            let i = 0;
+
+            while (i < jsonString.length) {
+                let char = jsonString[i];
+
+                // Toggle the insideString flag if we encounter a quote
+                if (char === '"' || char === "'") {
+                    insideString = !insideString;
+                }
+
+                // Add quotes around unquoted keys and values
+                if (!insideString && char.match(/[a-zA-Z_]/)) {
+                    let value = char;
+                    i++;
+                    while (i < jsonString.length && jsonString[i].match(/\w/)) {
+                        value += jsonString[i];
+                        i++;
+                    }
+                    if (jsonString[i] === ':' || jsonString[i] === ',' || jsonString[i] === '}' || jsonString[i] === ']') {
+                        result += `"${value}"${jsonString[i]}`;
+                    } else {
+                        result += value;
+                        continue;
+                    }
+                } else {
+                    // Handle booleans and null
+                    if (!insideString && (char === 't' || char === 'f' || char === 'n')) {
+                        let value = char;
+                        i++;
+                        while (i < jsonString.length && jsonString[i].match(/[a-z]/)) {
+                            value += jsonString[i];
+                            i++;
+                        }
+                        if (['true', 'false', 'null'].includes(value)) {
+                            result += `"${value}"`;
+                            continue;
+                        } else {
+                            result += value;
+                            continue;
+                        }
+                    } else {
+                        result += char;
+                    }
+                }
+
+                i++;
+            }
+
+            return result;
         }
     }
 
