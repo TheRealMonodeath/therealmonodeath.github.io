@@ -134,6 +134,25 @@
                             },
                         },
                     },
+                    {
+                        opcode: 'setJSONPathToValueNoQuotes',
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: 'Set value of [PATH] in [JSON_STRING] to [VALUE] without quotations',
+                        arguments: {
+                            PATH: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'fruit/apples',
+                            },
+                            JSON_STRING: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: '{"fruit": {"apples": 2, "bananas": 3}}',
+                            },
+                            VALUE: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: '5',
+                            },
+                        },
+                    },
                 ],
             };
         }
@@ -256,6 +275,35 @@
         }
         ValueAsStringNoNewline({ VALUE }) {
             return VALUE.replace(/\r?\n|\r/g, ' ').toString();
+        }
+        setJSONPathToValueNoQuotes({ PATH, JSON_STRING, VALUE }) {
+            try {
+                const path = PATH.toString().split('/').map(decodeURIComponent);
+                let json;
+                try {
+                    json = JSON.parse(JSON_STRING);
+                } catch (e) {
+                    return e.message;
+                }
+                let obj = json;
+                for (let i = 0; i < path.length - 1; i++) {
+                    if (!(path[i] in obj)) obj[path[i]] = {};
+                    obj = obj[path[i]];
+                }
+                
+                // Parse VALUE correctly
+                let parsedValue;
+                try {
+                    parsedValue = JSON.parse(VALUE);
+                } catch (e) {
+                    parsedValue = VALUE;
+                }
+                
+                obj[path[path.length - 1]] = parsedValue;
+                return JSON.stringify(json);
+            } catch (err) {
+                return '';
+            }
         }
     }
 
