@@ -93,6 +93,17 @@
                             },
                         },
                     },
+                    {
+                        opcode: 'ValueAsString',
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: '[VALUE] as string',
+                        arguments: {
+                            VALUE: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'true',
+                            },
+                        },
+                    },
                 ],
             };
         }
@@ -206,6 +217,9 @@
             } catch (err) {
                 return 'None';
             }
+        }
+        ValueAsString({ VALUE }) {
+            return VALUE.toString();
         }
     }
 
