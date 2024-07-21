@@ -123,6 +123,17 @@
                             },
                         },
                     },
+                    {
+                        opcode: 'ValueAsStringNoNewline',
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: '[VALUE] as string without newlines',
+                        arguments: {
+                            VALUE: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'true',
+                            },
+                        },
+                    },
                 ],
             };
         }
@@ -242,6 +253,9 @@
         }
         ValueBetweenTexts({ TEXT1, VALUE, TEXT2 }) {
             return `${TEXT1}${VALUE}${TEXT2}`;
+        }
+        ValueAsStringNoNewline({ VALUE }) {
+            return VALUE.replace(/\r?\n|\r/g, ' ').toString();
         }
     }
 
