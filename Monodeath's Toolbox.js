@@ -74,6 +74,25 @@
                             },
                         },
                     },
+                    {
+                        opcode: 'findEmptyPath',
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: '[SORT] empty path in [PATH] of [JSON_STRING]',
+                        arguments: {
+                            SORT: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'first',
+                            },
+                            PATH: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'fruit',
+                            },
+                            JSON_STRING: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: '{"fruit": {"apples": {}, "bananas": {}}}',
+                            },
+                        },
+                    },
                 ],
             };
         }
@@ -151,6 +170,41 @@
                 return JSON.stringify(json);
             } catch (err) {
                 return '';
+            }
+        }
+        findEmptyPath({ SORT, PATH, JSON_STRING }) {
+            try {
+                const path = PATH.toString().split('/').map(decodeURIComponent);
+                let json;
+                try {
+                    json = JSON.parse(JSON_STRING);
+                } catch (e) {
+                    return e.message;
+                }
+                
+                let obj = json;
+                for (let i = 0; i < path.length; i++) {
+                    if (!(path[i] in obj)) return 'None';
+                    obj = obj[path[i]];
+                }
+
+                const emptyKeys = Object.keys(obj).filter(key => {
+                    return typeof obj[key] === 'object' && Object.keys(obj[key]).length === 0;
+                });
+
+                if (emptyKeys.length === 0) {
+                    return 'None';
+                }
+
+                if (SORT === 'first') {
+                    return emptyKeys[0];
+                } else if (SORT === 'last') {
+                    return emptyKeys[emptyKeys.length - 1];
+                } else {
+                    return 'None';
+                }
+            } catch (err) {
+                return 'None';
             }
         }
     }
