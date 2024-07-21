@@ -309,7 +309,7 @@
                 try {
                     json = JSON.parse(JSON_STRING);
                 } catch (e) {
-                    return `Error parsing JSON: ${e.message}`;
+                    return `${e.message}`;
                 }
                 let obj = json;
                 for (let i = 0; i < path.length - 1; i++) {
@@ -342,70 +342,27 @@
                 return `Error: ${err.message}`;
             }
         }
-        validateJSON({
-            JSON_STRING
-        }) {
+        validateJSON({ JSON_STRING }) {
             try {
                 const quotedJSON = this.quoteUnquotedValues(JSON_STRING);
+                try {
+                    JSON.parse(quotedJSON);
+                } catch (e) {
+                    return `Error parsing JSON: ${e.message}`;
+                }
                 return `${quotedJSON}`;
             } catch (e) {
-                return `Error: ${e.message}`;
+                return `${e.message}`;
             }
         }
 
-        // Function to quote unquoted keys and values in the JSON string while preserving formatting
+        // Function to quote unquoted keys and values in the JSON string
         quoteUnquotedValues(jsonString) {
-            let result = '';
-            let insideString = false;
-            let i = 0;
-
-            while (i < jsonString.length) {
-                let char = jsonString[i];
-
-                // Toggle the insideString flag if we encounter a quote
-                if (char === '"' || char === "'") {
-                    insideString = !insideString;
-                }
-
-                // Add quotes around unquoted keys and values
-                if (!insideString && char.match(/[a-zA-Z_]/)) {
-                    let value = char;
-                    i++;
-                    while (i < jsonString.length && jsonString[i].match(/\w/)) {
-                        value += jsonString[i];
-                        i++;
-                    }
-                    if (jsonString[i] === ':' || jsonString[i] === ',' || jsonString[i] === '}' || jsonString[i] === ']') {
-                        result += `"${value}"${jsonString[i]}`;
-                    } else {
-                        result += value;
-                        continue;
-                    }
-                } else {
-                    // Handle booleans and null
-                    if (!insideString && (char === 't' || char === 'f' || char === 'n')) {
-                        let value = char;
-                        i++;
-                        while (i < jsonString.length && jsonString[i].match(/[a-z]/)) {
-                            value += jsonString[i];
-                            i++;
-                        }
-                        if (['true', 'false', 'null'].includes(value)) {
-                            result += `"${value}"`;
-                            continue;
-                        } else {
-                            result += value;
-                            continue;
-                        }
-                    } else {
-                        result += char;
-                    }
-                }
-
-                i++;
-            }
-
-            return result;
+            return jsonString
+                // Quote unquoted keys
+                .replace(/([{,]\s*)([a-zA-Z_]\w*)(\s*:)/g, '$1"$2"$3')
+                // Quote unquoted string values
+                .replace(/(:\s*)([a-zA-Z_][a-zA-Z_ ]*[a-zA-Z_])(\s*[,}])/g, '$1"$2"$3');
         }
     }
 
