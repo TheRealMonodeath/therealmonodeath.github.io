@@ -7,6 +7,7 @@ Switch - Has a "state", and sets the data to its state. Clicking it changes it's
 Text - Stores text and text settings and loads it.
 Image - Displays an Image
 If-Else Button? - Finds a condition and activates depending on that variable. Example: If i = 1, then set var to 5, if i = 2 then set var to 10.
+Pages - A button that increases or decreases a value with a specified maximum/minimum. Uses for pages like Inventory/Chapters.
 
 All GUI elements can also have a prerequisite.
 
