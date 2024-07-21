@@ -58,12 +58,8 @@
                     {
                         opcode: 'setJSONPathToValue',
                         blockType: Scratch.BlockType.REPORTER,
-                        text: 'Set [VALUE] of [PATH] in [JSON_STRING]',
+                        text: 'Set value of [PATH] in [JSON_STRING] to [VALUE]',
                         arguments: {
-                            VALUE: {
-                                type: Scratch.ArgumentType.STRING,
-                                defaultValue: '5',
-                            },
                             PATH: {
                                 type: Scratch.ArgumentType.STRING,
                                 defaultValue: 'fruit/apples',
@@ -71,6 +67,10 @@
                             JSON_STRING: {
                                 type: Scratch.ArgumentType.STRING,
                                 defaultValue: '{"fruit": {"apples": 2, "bananas": 3}}',
+                            },
+                            VALUE: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: '5',
                             },
                         },
                     },
@@ -130,9 +130,9 @@
         }
 
         setJSONPathToValue({
-            VALUE,
             PATH,
-            JSON_STRING
+            JSON_STRING,
+            VALUE
         }) {
             try {
                 const path = PATH.toString().split('/').map(decodeURIComponent);
