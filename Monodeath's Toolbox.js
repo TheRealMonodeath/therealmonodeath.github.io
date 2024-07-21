@@ -104,6 +104,25 @@
                             },
                         },
                     },
+                    {
+                        opcode: 'ValueBetweenTexts',
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: '[TEXT1][VALUE][TEXT2]',
+                        arguments: {
+                            TEXT1: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'Hello',
+                            },
+                            VALUE: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'world',
+                            },
+                            TEXT2: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: '!',
+                            },
+                        },
+                    },
                 ],
             };
         }
@@ -220,6 +239,9 @@
         }
         ValueAsString({ VALUE }) {
             return VALUE.toString();
+        }
+        ValueBetweenTexts({ TEXT1, VALUE, TEXT2 }) {
+            return `${TEXT1}${VALUE}${TEXT2}`;
         }
     }
 
