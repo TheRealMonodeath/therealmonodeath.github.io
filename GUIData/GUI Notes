@@ -5,6 +5,7 @@ GUI Elements:
 Button - Sets a variable/changes a list/broadcasts a signal when pressed. Can be conditional.
 Switch - Has a "state", and sets the data to its state. Clicking it changes it's state. Can be conditional.
 Text - Stores text and text settings and loads it.
+If-Else Button? - Finds a condition and activates depending on that variable. Example: If i = 1, then set var to 5, if i = 2 then set var to 10.
 
 All GUI elements can also have a prerequisite.
 
@@ -16,3 +17,9 @@ prerequisites then require you to check each inactive gui (which we now know how
 VAR/LIST
 EQUALS/ABOVE
 AMOUNT
+
+works
+
+GUI Elements:
+right now we need to plan what the GUI elements are going to be and what properties they will take on.
+Is there any situation where a conditional button will be necessary that can't just be prerequisites?
