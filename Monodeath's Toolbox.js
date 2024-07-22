@@ -231,6 +231,10 @@
                     return !(A || C);
                 case "xnor":
                     return A === C;
+                case "ignore":
+                    return A;
+                case "pass":
+                    return C;
                 default:
                     return false;
             }
