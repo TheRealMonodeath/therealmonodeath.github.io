@@ -145,7 +145,43 @@
                             },
                         },
                     },
+                    {
+                        opcode: 'RemovePattern',
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: 'remove [PATTERN] letter(s) from [VALUE]',
+                        arguments: {
+                            PATTERN: {
+                                type: Scratch.ArgumentType.STRING,
+                                menu: 'patternMenu',
+                                defaultValue: 'first',
+                            },
+                            VALUE: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'example',
+                            },
+                        },
+                    },
                 ],
+
+                menus: {
+                    patternMenu: {
+                        items: [
+                            'first', 'last', 'first and last', 
+                            'odd', 'even', 'first half', 'second half', 
+                            'first third', 'second third', 'third third', 
+                            'alternating groups of 2', 'inversed alternating groups of 2', 'alternating groups of 3',
+                            'inversed alternating groups of 3', 'first and last third', 'first of second half', 'last of first half', 'first of second third',
+                            'last of second third', 'all characters matching first letter',
+                            'all characters matching last letter', 'all matching first and last', 'matching first half', 'matching second half',
+                            'character after all characters matching first character', 'letters', 'numbers', 'special characters', 
+                            'brackets', 'slashes', 'operators', 'spaces', 'spaces and newlines', 'capital letters',
+                            'lowercase letters', 'end punctuation', 'superscript',
+                            'alphanumeric', 'hyphens', 'underscores', 'vowels', 'vowels (y included)', 'consonants', 
+                            'apostrophes', 'vertical bars', 'ampersands', 
+                            'hashtags', 'currency symbols'
+                        ]
+                    }
+                }
             };
         }
 
@@ -278,6 +314,109 @@
         ValueNoQuotes({ VALUE }) {
             // Remove any surrounding quotes from the VALUE
             return VALUE.replace(/^"|"$/g, '');
+        }
+        RemovePattern({ PATTERN, VALUE }) {
+            const len = VALUE.length;
+            switch (PATTERN) {
+                case 'first':
+                    return VALUE.substring(1);
+                case 'last':
+                    return VALUE.substring(0, len - 1);
+                case 'first and last':
+                    return VALUE.substring(1, len - 1);
+                case 'odd':
+                    return VALUE.split('').filter((_, i) => i % 2 === 1).join('');
+                case 'even':
+                    return VALUE.split('').filter((_, i) => i % 2 === 0).join('');
+                case 'first half':
+                    return VALUE.substring(Math.floor(len / 2));
+                case 'second half':
+                    return VALUE.substring(0, Math.ceil(len / 2));
+                case 'first third':
+                    return VALUE.substring(Math.floor(len / 3));
+                case 'second third':
+                    return VALUE.substring(0, Math.floor(len / 3)) + VALUE.substring(Math.ceil(2 * len / 3));
+                case 'third third':
+                    return VALUE.substring(0, Math.ceil(2 * len / 3));
+                case 'alternating groups of 2':
+                    return VALUE.split('').filter((_, i) => Math.floor(i / 2) % 2 === 0).join('');
+                case 'inversed alternating groups of 2':
+                    return VALUE.split('').filter((_, i) => Math.floor(i / 2) % 2 !== 0).join
+                case 'alternating groups of 3':
+                    return VALUE.split('').filter((_, i) => Math.floor(i / 3) % 2 === 0).join('');
+                case 'inversed alternating groups of 3':
+                    return VALUE.split('').filter((_, i) => Math.floor(i / 3) % 2 === 1).join('');
+                case 'first and last third':
+                    return VALUE.substring(Math.floor(VALUE.length / 3), Math.ceil(2 * VALUE.length / 3));
+                case 'first of second half':
+                    return VALUE.substring(Math.ceil(VALUE.length / 2), Math.ceil(VALUE.length / 2) + 1);
+                case 'last of first half':
+                    return VALUE.substring(Math.floor(VALUE.length / 2) - 1, Math.floor(VALUE.length / 2));
+                case 'first of second third':
+                    return VALUE.substring(Math.floor(VALUE.length / 3), Math.floor(VALUE.length / 3) + 1);
+                case 'last of second third':
+                    return VALUE.substring(Math.floor(2 * VALUE.length / 3) - 1, Math.floor(2 * VALUE.length / 3));
+                case 'all characters matching first letter':
+                    return VALUE.split(VALUE[0]).join('');
+                case 'all characters matching last letter':
+                    return VALUE.split(VALUE[VALUE.length - 1]).join('');
+                case 'all matching first and last':
+                    return VALUE.split('').filter(ch => ch !== VALUE.charAt(0) && ch !== VALUE.charAt(VALUE.length - 1)).join('');
+                case 'matching first half':
+                    return VALUE.split('').filter(ch => !VALUE.substring(0, Math.floor(VALUE.length / 2)).includes(ch)).join('');
+                case 'matching second half':
+                    return VALUE.split('').filter(ch => !VALUE.substring(Math.ceil(VALUE.length / 2)).includes(ch)).join('');
+                case 'character after all characters matching first character':
+                    return VALUE.split('').filter((ch, i) => !(i > 0 && VALUE.charAt(i - 1) === VALUE.charAt(0))).join('');
+                case 'letters':
+                    return VALUE.replace(/[a-zA-Z]/g, '');
+                case 'numbers':
+                    return VALUE.replace(/[0-9]/g, '');
+                case 'special characters':
+                    return VALUE.replace(/[^a-zA-Z0-9\s]/g, '');
+                case 'brackets':
+                    return VALUE.replace(/[\[\]\(\)\{\}]/g, '');
+                case 'slashes':
+                    return VALUE.replace(/[\/\\]/g, '');
+                case 'operators':
+                    return VALUE.replace(/[\+\-\>\<\=\*]/g, '');
+                case 'spaces':
+                    return VALUE.replace(/ /g, '');
+                case 'spaces and newlines':
+                    return VALUE.replace(/[\s\n]/g, '');
+                case 'capital letters':
+                    return VALUE.replace(/[A-Z]/g, '');
+                case 'lowercase letters':
+                    return VALUE.replace(/[a-z]/g, '');
+                case 'end punctuation':
+                    return VALUE.replace(/[.!?…]/g, '');
+                case 'superscript':
+                    return VALUE.replace(/\^/g, '');
+                case 'alphanumeric':
+                    return VALUE.replace(/[a-zA-Z0-9]/g, '');
+                case 'hyphens':
+                    return VALUE.replace(/-/g, '');
+                case 'underscores':
+                    return VALUE.replace(/_/g, '');
+                case 'vowels':
+                    return VALUE.replace(/[aeiouAEIOU]/g, '');
+                case 'vowels (y included)':
+                    return VALUE.replace(/[aeiouyAEIOUY]/g, '');
+                case 'consonants':
+                    return VALUE.replace(/[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]/g, '');
+                case 'apostrophes':
+                    return VALUE.replace(/['’]/g, '');
+                case 'vertical bars':
+                    return VALUE.replace(/\|/g, '');
+                case 'ampersands':
+                    return VALUE.replace(/&/g, '');
+                case 'hashtags':
+                    return VALUE.replace(/#/g, '');
+                case 'currency symbols':
+                    return VALUE.replace(/[\$\£\¥\₱\€\¢\₩\₼\៛]/g, '');
+                default:
+                    return VALUE;
+            }
         }
     }
 
