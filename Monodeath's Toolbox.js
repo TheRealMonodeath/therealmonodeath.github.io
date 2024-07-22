@@ -178,7 +178,7 @@
                             'lowercase letters', 'end punctuation', 'superscript',
                             'alphanumeric', 'hyphens', 'underscores', 'vowels', 'vowels (y included)', 'consonants', 
                             'apostrophes', 'vertical bars', 'ampersands', 
-                            'hashtags', 'currency symbols'
+                            'hashtags', 'currency symbols', 'true', 'false', 'quotation', 'markdown', 'uncommon'
                         ]
                     }
                 }
@@ -414,6 +414,16 @@
                     return VALUE.replace(/#/g, '');
                 case 'currency symbols':
                     return VALUE.replace(/[\$\£\¥\₱\€\¢\₩\₼\៛]/g, '');
+                case 'true':
+                    return VALUE.replace(/true/g, '');
+                case 'false':
+                    return VALUE.replace(/false/g, '');
+                case 'quotation':
+                    return VALUE.replace(/["']/g, '');
+                case 'markdown':
+                    return VALUE.replace(/[*_~^#@]/g, '');
+                case 'uncommon':
+                    return VALUE.replace(/[zxyjq]/g, '');
                 default:
                     return VALUE;
             }
