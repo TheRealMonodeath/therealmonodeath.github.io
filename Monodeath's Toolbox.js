@@ -9,7 +9,7 @@
 
     const cast = Scratch.Cast;
 
-    class ScratchMath {
+    class Monodeath {
         getInfo() {
             return {
                 id: "Monodeath",
@@ -145,36 +145,6 @@
                             },
                         },
                     },
-                    {
-                        opcode: 'setJSONPathToValueNF',
-                        blockType: Scratch.BlockType.REPORTER,
-                        text: 'Set value of [PATH] in [JSON_STRING] to [VALUE] without unnecessary JSON formatting',
-                        arguments: {
-                            PATH: {
-                                type: Scratch.ArgumentType.STRING,
-                                defaultValue: 'fruit/apples',
-                            },
-                            JSON_STRING: {
-                                type: Scratch.ArgumentType.STRING,
-                                defaultValue: '{"fruit": {"apples": 2, "bananas": 3}}',
-                            },
-                            VALUE: {
-                                type: Scratch.ArgumentType.STRING,
-                                defaultValue: 'test',
-                            },
-                        },
-                    },
-                    {
-                        opcode: 'validateJSON',
-                        blockType: Scratch.BlockType.REPORTER,
-                        text: 'validated [JSON_STRING]',
-                        arguments: {
-                            JSON_STRING: {
-                                type: Scratch.ArgumentType.STRING,
-                                defaultValue: '{"fruit": {"apples": 2, bananas: 3}}',
-                            },
-                        },
-                    },
                 ],
             };
         }
@@ -248,7 +218,14 @@
                     if (!(path[i] in obj)) obj[path[i]] = {};
                     obj = obj[path[i]];
                 }
-                obj[path[path.length - 1]] = VALUE;
+                
+                // Determine the correct type for VALUE based on its content
+                try {
+                    obj[path[path.length - 1]] = JSON.parse(VALUE);
+                } catch (e) {
+                    obj[path[path.length - 1]] = VALUE;
+                }
+
                 return JSON.stringify(json);
             } catch (err) {
                 return '';
@@ -302,69 +279,7 @@
             // Remove any surrounding quotes from the VALUE
             return VALUE.replace(/^"|"$/g, '');
         }
-        setJSONPathToValueNF({ PATH, JSON_STRING, VALUE }) {
-            try {
-                const path = PATH.split('/').map(decodeURIComponent);
-                let json;
-                try {
-                    json = JSON.parse(JSON_STRING);
-                } catch (e) {
-                    return `${e.message}`;
-                }
-                let obj = json;
-                for (let i = 0; i < path.length - 1; i++) {
-                    if (!(path[i] in obj)) obj[path[i]] = {};
-                    obj = obj[path[i]];
-                }
-                // Set the value directly without quoting it
-                obj[path[path.length - 1]] = VALUE;
-
-                // Convert the updated JSON object to a plain text string
-                function objToPlainText(obj) {
-                    if (typeof obj === 'object' && obj !== null) {
-                        let str = '{';
-                        const keys = Object.keys(obj);
-                        for (let i = 0; i < keys.length; i++) {
-                            const key = keys[i];
-                            const value = obj[key];
-                            str += `"${key}": ${typeof value === 'object' ? objToPlainText(value) : value}`;
-                            if (i < keys.length - 1) str += ', ';
-                        }
-                        str += '}';
-                        return str;
-                    } else {
-                        return typeof obj === 'string' ? obj : String(obj);
-                    }
-                }
-
-                return objToPlainText(json);
-            } catch (err) {
-                return `Error: ${err.message}`;
-            }
-        }
-        validateJSON({ JSON_STRING }) {
-            try {
-                const quotedJSON = this.quoteUnquotedValues(JSON_STRING);
-                try {
-                    JSON.parse(quotedJSON);
-                } catch (e) {
-                    return `Error parsing JSON: ${e.message}`;
-                }
-                return `${quotedJSON}`;
-            } catch (e) {
-                return `${e.message}`;
-            }
-        }
-
-        // Function to quote unquoted keys and values in the JSON string
-        quoteUnquotedValues(jsonString) {
-            return jsonString
-                // Quote unquoted keys
-                .replace(/([{,]\s*)([a-zA-Z_]\w*)(\s*:)/g, '$1"$2"$3')
-                // Quote unquoted string values
-                .replace(/(:\s*)([a-zA-Z_][a-zA-Z_ ]*[a-zA-Z_])(\s*[,}])/g, '$1"$2"$3');
-        }
     }
 
-    Scratch.extensions.register(new ScratchMath());
+    Scratch.extensions.register(new Monodeath());
 })(Scratch);
