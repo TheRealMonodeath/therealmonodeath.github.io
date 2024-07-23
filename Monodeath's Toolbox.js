@@ -161,6 +161,21 @@
                             },
                         },
                     },
+                    {
+                        opcode: 'EmptyPathIndex',
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: 'empty paths in [PATH] of [JSON_STRING]',
+                        arguments: {
+                            PATH: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'fruit',
+                            },
+                            JSON_STRING: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: '{"fruit": {"apples": {}, "bananas": {"example": "cool!"}}}',
+                            },
+                        },
+                    },
                 ],
 
                 menus: {
@@ -430,6 +445,36 @@
                     return VALUE.replace(/[zxyjq]/g, '');
                 default:
                     return VALUE;
+            }
+        }
+        EmptyPathIndex({ PATH, JSON_STRING }) {
+            try {
+                const path = PATH.toString().split('/').map(decodeURIComponent);
+                let json;
+                try {
+                    json = JSON.parse(JSON_STRING);
+                } catch (e) {
+                    return e.message;
+                }
+
+                let obj = json;
+                for (let i = 0; i < path.length; i++) {
+                    if (!(path[i] in obj)) return 'None';
+                    obj = obj[path[i]];
+                }
+
+                const emptyKeys = Object.keys(obj).filter(key => {
+                    return typeof obj[key] === 'object' && Object.keys(obj[key]).length === 0;
+                });
+
+                if (emptyKeys.length === 0) {
+                    return 'None';
+                }
+
+                return emptyKeys.join(',');
+
+            } catch (err) {
+                return 'None';
             }
         }
     }
