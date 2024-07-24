@@ -177,6 +177,21 @@
                         },
                     },
                     {
+                        opcode: 'GetCharacterIndexes',
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: 'get indexes of [CHARACTER] in [VALUE]',
+                        arguments: {
+                            CHARACTER: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: '#',
+                            },
+                            VALUE: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'hello#world#!',
+                            },
+                        },
+                    },
+                    {
                         opcode: 'GetSubstringIndexes',
                         blockType: Scratch.BlockType.REPORTER,
                         text: 'get indexes of [SUBSTRING] in [VALUE]',
@@ -491,6 +506,17 @@
             } catch (err) {
                 return 'None';
             }
+        }
+        GetCharacterIndexes({ CHARACTER, VALUE }) {
+            VALUE = String(VALUE);
+            CHARACTER = String(CHARACTER);
+            let indexes = [];
+            for (let i = 0; i < VALUE.length; i++) {
+                if (VALUE[i] === CHARACTER) {
+                    indexes.push(i + 1);
+                }
+            }
+            return indexes;
         }
         GetSubstringIndexes({ SUBSTRING, VALUE }) {
             VALUE = String(VALUE);
