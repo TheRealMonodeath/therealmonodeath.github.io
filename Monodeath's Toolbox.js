@@ -176,6 +176,21 @@
                             },
                         },
                     },
+                    {
+                        opcode: 'GetSubstringIndexes',
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: 'get indexes of [SUBSTRING] in [VALUE]',
+                        arguments: {
+                            SUBSTRING: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'true',
+                            },
+                            VALUE: {
+                                type: Scratch.ArgumentType.STRING,
+                                defaultValue: 'truefalsetruefalsetrue',
+                            },
+                        },
+                    },
                 ],
 
                 menus: {
@@ -476,6 +491,19 @@
             } catch (err) {
                 return 'None';
             }
+        }
+        GetSubstringIndexes({ SUBSTRING, VALUE }) {
+            VALUE = String(VALUE);
+            SUBSTRING = String(SUBSTRING);
+            let indexes = [];
+            let startIndex = 0;
+
+            while ((startIndex = VALUE.indexOf(SUBSTRING, startIndex)) !== -1) {
+                indexes.push(startIndex + 1);
+                startIndex += SUBSTRING.length;
+            }
+
+            return indexes;
         }
     }
 
