@@ -16,9 +16,9 @@
       return {
         id: "monodeathToolbox",
         name: "Mono's Toolbox",
-        color1: "#661f69",
-        color2: "#4b2254",
-        color3: "#33223d",
+        color1: "#1f152e",
+        color2: "#1f1126",
+        color3: "#1d0c21",
         blocks: [
           {
             opcode: "test",
