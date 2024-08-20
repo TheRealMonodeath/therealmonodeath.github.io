@@ -16,9 +16,9 @@
       return {
         id: "monodeathToolbox", // ID should match the registered name
         name: "Mono's Toolbox",
-        color1: "#FFAB19",
-        color2: "#EC9C13",
-        color3: "#CF8B17",
+        color1: "#661f69",
+        color2: "#4b2254",
+        color3: "#33223d",
         blocks: [
           {
             opcode: "test", // Lowercase opcode for consistency
