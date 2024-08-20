@@ -14,17 +14,17 @@
 
     getInfo() {
       return {
-        id: "monodeathToolbox", // ID should match the registered name
+        id: "monodeathToolbox",
         name: "Mono's Toolbox",
         color1: "#661f69",
         color2: "#4b2254",
         color3: "#33223d",
         blocks: [
           {
-            opcode: "test", // Lowercase opcode for consistency
+            opcode: "test",
             blockType: Scratch.BlockType.LOOP,
             text: "repeat [DURATION] [TYPE] or until [CONDITION]",
-            branchCount: 1, // Must be 1 for LOOP blocks
+            branchCount: 1,
             arguments: {
               DURATION: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -59,7 +59,7 @@
       };
     }
 
-    test(args, util) { // Changed to match the opcode name
+    test(args, util) {
       const type = Cast.toString(args.TYPE);
       if (type === "frames") {
         const duration = Math.round(Cast.toNumber(args.DURATION));
