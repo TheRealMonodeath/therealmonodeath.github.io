@@ -40,6 +40,17 @@ class Monodeath {
           },
         },
         {
+          opcode: "hasBeen", //hasbeen hotel
+          blockType: Scratch.BlockType.BOOLEAN,
+          text: "has been [SECONDS] seconds since last ran",
+          arguments: {
+            SECONDS: {
+              type: Scratch.ArgumentType.NUMBER,
+              defaultValue: 1,
+            },
+          },
+        },
+        {
           opcode: "modifyArray",
           blockType: Scratch.BlockType.REPORTER,
           text: "[OPERATION] [VALUE] to [ARRAY]",
@@ -100,31 +111,53 @@ class Monodeath {
     return false;
   }
 
-  modifyArray({ OPERATION, VALUE, ARRAY }) {
-    const parsedArray = JSON.parse(ARRAY);
-    const value = parseFloat(VALUE);
+  hasBeen(args, util) {
+    const { SECONDS } = args;
 
-    const resultArray = parsedArray.map(item => {
-      const num = parseFloat(item);
-      if (isNaN(num)) {
-        return item;
-      }
-      switch (OPERATION) {
-        case "add":
-          return (num + value).toString();
-        case "subtract":
-          return (num - value).toString();
-        case "multiply":
-          return (num * value).toString();
-        case "divide":
-          return (num / value).toString();
-        default:
-          return num.toString();
-      }
-    });
+    if (!util.lastRunTimes) {
+      util.lastRunTimes = {};
+    }
 
-    return JSON.stringify(resultArray); 
+    const blockId = `${util.target.id}_${util.thread.topBlock}`;
+    const currentTime = Date.now();
+    const lastRunTime = util.lastRunTimes[blockId] || 0;
+    const timePassed = (currentTime - lastRunTime) / 1000;
+
+    return timePassed >= SECONDS;
   }
+
+  modifyArray({ OPERATION, VALUE, ARRAY }) {
+  const parsedArray = JSON.parse(ARRAY);
+  const value = parseFloat(VALUE);
+
+  const resultArray = parsedArray.map(item => {
+    const num = parseFloat(item);
+    if (isNaN(num)) {
+      return item;
+    }
+    let result;
+    switch (OPERATION) {
+      case "add":
+        result = num + value;
+        break;
+      case "subtract":
+        result = num - value;
+        break;
+      case "multiply":
+        result = num * value;
+        break;
+      case "divide":
+        result = num / value;
+        break;
+      default:
+        return num.toString();
+    }
+    // Round to a reasonable number of decimal places (e.g., 10)
+    return result.toFixed(10).replace(/\.?0+$/, '');
+  });
+
+  return JSON.stringify(resultArray);
+}
 }
 
 Scratch.extensions.register(new Monodeath());
