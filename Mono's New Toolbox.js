@@ -39,13 +39,39 @@ class Monodeath {
             },
           },
         },
+        {
+          opcode: "modifyArray",
+          blockType: Scratch.BlockType.REPORTER,
+          text: "[OPERATION] [VALUE] to [ARRAY]",
+          arguments: {
+            OPERATION: {
+              type: Scratch.ArgumentType.STRING,
+              menu: "operationMenu",
+              defaultValue: "add",
+            },
+            VALUE: {
+              type: Scratch.ArgumentType.NUMBER,
+              defaultValue: 1,
+            },
+            ARRAY: {
+              type: Scratch.ArgumentType.STRING,
+              defaultValue: '["1", "2", "3"]',
+            },
+          },
+        },
       ],
+      menus: {
+        operationMenu: {
+          acceptReporters: true,
+          items: ["add", "subtract", "multiply", "divide"],
+        },
+      },
     };
   }
 
   RepeatOrUntil(args, util) {
     if (util.stackTimerNeedsInit()) {
-      const duration = Math.max(0, 1000 * Number(args.DURATION)); // Convert DURATION to a number
+      const duration = Math.max(0, 1000 * Number(args.DURATION));
       util.startStackTimer(duration);
       return true;
     } else if (!util.stackTimerFinished() && !args.CONDITION) {
@@ -72,6 +98,32 @@ class Monodeath {
     }
 
     return false;
+  }
+
+  modifyArray({ OPERATION, VALUE, ARRAY }) {
+    const parsedArray = JSON.parse(ARRAY);
+    const value = parseFloat(VALUE);
+
+    const resultArray = parsedArray.map(item => {
+      const num = parseFloat(item);
+      if (isNaN(num)) {
+        return item;
+      }
+      switch (OPERATION) {
+        case "add":
+          return (num + value).toString();
+        case "subtract":
+          return (num - value).toString();
+        case "multiply":
+          return (num * value).toString();
+        case "divide":
+          return (num / value).toString();
+        default:
+          return num.toString();
+      }
+    });
+
+    return JSON.stringify(resultArray); 
   }
 }
 
