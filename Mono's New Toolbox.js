@@ -21,7 +21,7 @@
         color3: "#1d0c21",
         blocks: [
           {
-            opcode: "test",
+            opcode: "RepeatOrUntil",
             blockType: Scratch.BlockType.LOOP,
             text: "repeat [DURATION] or until [CONDITION]",
             branchCount: 1,
@@ -37,11 +37,27 @@
               },
             },
           },
+          {
+            opcode: "ifAndHasBeen",
+            blockType: Scratch.BlockType.CONDITIONAL,
+            text: "If [CONDITION] and has been [SECONDS] seconds since last ran",
+            branchCount: 1,
+            arguments: {
+              CONDITION: {
+                type: Scratch.ArgumentType.BOOLEAN,
+                defaultValue: true,
+              },
+              SECONDS: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 1,
+              },
+            },
+          },
         ],
       };
     }
 
-    test(args, util) {
+    RepeatOrUntil(args, util) {
   if (util.stackTimerNeedsInit()) {
     const duration = Math.max(0, 1000 * Cast.toNumber(args.DURATION));
     util.startStackTimer(duration);
@@ -52,6 +68,30 @@
   }
   return false;
 }
+
+  ifAndHasBeen({ CONDITION, SECONDS }, util) {
+      // Generate a unique key for each block instance
+      const blockId = `${util.target.id}_${util.thread.topBlock}`;
+
+      // Get the current time in milliseconds
+      const currentTime = Date.now();
+
+      // Get the last run time for this block, or default to 0
+      const lastRunTime = lastRunTimes[blockId] || 0;
+
+      // Calculate the time passed since the last run, in seconds
+      const timePassed = (currentTime - lastRunTime) / 1000;
+
+      // Check if the condition is true and the required time has passed
+      if (CONDITION && timePassed >= SECONDS) {
+        // Update the last run time to the current time
+        lastRunTimes[blockId] = currentTime;
+        return true; // Allow the nested blocks to run
+      }
+
+      return false; // Skip the nested blocks
+    }
+  }
 
   Scratch.extensions.register(new MoreControl());
 })(Scratch);
