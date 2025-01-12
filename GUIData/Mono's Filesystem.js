@@ -1,15 +1,12 @@
 (function(Scratch) {
     'use strict';
 
-    // Metadata
     const extensionName = 'Monodeath\'s Filesystem';
     const extensionID = 'MonoFiles';
-    const extensionDescription = 'Allows you to manage an in-app local filesystem.';
 
-    // In-memory filesystem
     let fileSystem = {};
 
-    // Helper functions
+    // Helper Functions
     function getPathArray(path) {
         return path.split('/').filter(part => part.trim() !== '');
     }
@@ -65,7 +62,25 @@
         }
     }
 
-    // Extension blocks
+    function formatAsJSON() {
+        return JSON.stringify(fileSystem, null, 2);
+    }
+
+    function importJSONFileSystem(jsonString) {
+        try {
+            const parsedData = JSON.parse(jsonString);
+            if (typeof parsedData === 'object') {
+                fileSystem = parsedData;
+                return 'Filesystem imported successfully!';
+            } else {
+                return 'Invalid JSON structure!';
+            }
+        } catch (e) {
+            return 'Invalid JSON format!';
+        }
+    }
+
+    // Extension Blocks
     class MonoFiles {
         getInfo() {
             return {
@@ -131,6 +146,27 @@
                         arguments: {
                             PATH: { type: Scratch.ArgumentType.STRING, defaultValue: 'Data.json' }
                         }
+                    },
+                    {
+                        opcode: 'formatFileSystemAsJSON',
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: 'format filesystem as JSON'
+                    },
+                    {
+                        opcode: 'getRawContent',
+                        blockType: Scratch.BlockType.REPORTER,
+                        text: 'get raw content of [PATH]',
+                        arguments: {
+                            PATH: { type: Scratch.ArgumentType.STRING, defaultValue: 'Folder/File.txt' }
+                        }
+                    },
+                    {
+                        opcode: 'importFileSystemFromJSON',
+                        blockType: Scratch.BlockType.COMMAND,
+                        text: 'import filesystem from JSON [JSONDATA]',
+                        arguments: {
+                            JSONDATA: { type: Scratch.ArgumentType.STRING, defaultValue: '{}' }
+                        }
                     }
                 ]
             };
@@ -164,10 +200,7 @@
         getFileData(args) {
             const path = args.PATH;
             const data = getFileOrFolder(path);
-            if (typeof data === 'string') {
-                return data;
-            }
-            return '[Not a file or does not exist]';
+            return (typeof data === 'string') ? data : '[Not a file or does not exist]';
         }
 
         pathExists(args) {
@@ -179,9 +212,31 @@
             const path = args.PATH;
             return isValidJSON(path);
         }
+
+        formatFileSystemAsJSON() {
+            return formatAsJSON();
+        }
+
+        getRawContent(args) {
+            const path = args.PATH;
+            const data = getFileOrFolder(path);
+            if (typeof data === 'object') {
+                return JSON.stringify(data, null, 2);
+            } else if (typeof data === 'string') {
+                return data;
+            } else {
+                return '[Path does not exist]';
+            }
+        }
+
+        importFileSystemFromJSON(args) {
+            const jsonData = args.JSONDATA;
+            return importJSONFileSystem(jsonData);
+        }
     }
 
-    // Register the extension
     Scratch.extensions.register(new MonoFiles());
 
 })(Scratch);
+
+
