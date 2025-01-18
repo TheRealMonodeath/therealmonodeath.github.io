@@ -1,0 +1,107 @@
+{
+  "GUIData": {
+    "StartScreen": {
+      "1": {
+        "X": "0",
+        "Y": "-140",
+        "Prerequisite": "Variable",
+        "Prerequisite Variable Name": "Game Loaded?",
+        "Prerequisite Variable Value": "Yes",
+        "ElementType": "Button",
+        "Variable": "GUI",
+        "Value": "Home"
+      }
+    },
+    "Home": {
+      "1": {
+        "X": "0",
+        "Y": "-150",
+        "Prerequisite": "None",
+        "ElementType": "Button",
+        "Variable": "Main Menu Page",
+        "Value": "Game"
+      },
+      "2": {
+        "X": "100",
+        "Y": "-150",
+        "Prerequisite": "None",
+        "ElementType": "Button",
+        "Variable": "Main Menu Page",
+        "Value": "Persona"
+      },
+      "3": {
+        "X": "200",
+        "Y": "-150",
+        "Prerequisite": "None",
+        "ElementType": "Button",
+        "Variable": "Main Menu Page",
+        "Value": "Shop"
+      },
+      "4": {
+        "X": "-100",
+        "Y": "-150",
+        "Prerequisite": "None",
+        "ElementType": "Button",
+        "Variable": "Main Menu Page",
+        "Value": "Intel"
+      },
+      "5": {
+        "X": "-200",
+        "Y": "-150",
+        "Prerequisite": "None",
+        "ElementType": "Button",
+        "Variable": "Main Menu Page",
+        "Value": "Unknown"
+      },
+      "6": {
+        "X": "200",
+        "Y": "150",
+        "Prerequisite": "None",
+        "ElementType": "Button",
+        "Variable": "PopupMenu",
+        "Value": "Settings"
+      },
+      "7": {
+        "X": "120",
+        "Y": "150",
+        "Prerequisite": "None",
+        "ElementType": "Button",
+        "Variable": "PopupMenu",
+        "Value": "Inbox"
+      },
+      "8": {
+        "X": "0",
+        "Y": "-120",
+        "Prerequisite": "Variable",
+        "Prerequisite Variable Name": "Main Menu Page",
+        "Prerequisite Variable Value": "Game",
+        "ElementType": "Button",
+        "Variable": "PopupMenu",
+        "Value": "StartMenu"
+      },
+      "9": {
+        "X": "70",
+        "Y": "-120",
+        "Prerequisite": "Variable",
+        "Prerequisite Variable Name": "Main Menu Page",
+        "Prerequisite Variable Value": "Game",
+        "ElementType": "Button",
+        "Variable": "PopupMenu",
+        "Value": "GameSettings"
+      }
+    },
+    "InGameUI": {}
+  },
+  "PopupData": {
+    "StartMenu": {
+      "1": {
+        "X": "180",
+        "Y": "130",
+        "Prerequisite": "None",
+        "ElementType": "Button",
+        "Variable": "PopupMenu",
+        "Value": "None"
+      }
+    }
+  }
+}
