@@ -98,6 +98,20 @@
         "ElementType": "Button",
         "Variable": "PopupMenu",
         "Value": "PauseMenu"
+      },
+      "2": {
+        "X": "-200",
+        "Y": "150",
+        "Prerequisite": "None",
+        "ElementType": "Display",
+        "Displaying": "Round",
+      },
+      "3": {
+        "X": "-200",
+        "Y": "120",
+        "Prerequisite": "None",
+        "ElementType": "Display",
+        "Displaying": "Money",
       }
     }
   },
