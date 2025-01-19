@@ -101,6 +101,24 @@
         "ElementType": "Button",
         "Variable": "PopupMenu",
         "Value": "None"
+      },
+      "2": {
+        "X": "-75",
+        "Y": "-130",
+        "Prerequisite": "None",
+        "ElementType": "Button",
+        "SpecialFunction": "Broadcast",
+        "BroadcastName": "New Game",
+        "BroadcastData": "New"
+      },
+      "3": {
+        "X": "75",
+        "Y": "-130",
+        "Prerequisite": "None",
+        "ElementType": "Button",
+        "SpecialFunction": "Broadcast",
+        "BroadcastName": "New Game",
+        "BroadcastData": "Continue"
       }
     }
   }
