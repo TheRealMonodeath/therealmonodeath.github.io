@@ -90,7 +90,16 @@
         "Value": "GameSettings"
       }
     },
-    "InGameUI": {}
+    "InGame": {
+      "1": {
+        "X": "200",
+        "Y": "150",
+        "Prerequisite": "None",
+        "ElementType": "Button",
+        "Variable": "PopupMenu",
+        "Value": "PauseMenu"
+      }
+    }
   },
   "PopupData": {
     "StartMenu": {
