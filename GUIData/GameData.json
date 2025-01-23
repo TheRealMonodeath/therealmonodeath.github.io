@@ -104,14 +104,14 @@
         "Y": "150",
         "Prerequisite": "None",
         "ElementType": "Display",
-        "Displaying": "Round",
+        "Displaying": "Round"
       },
       "3": {
         "X": "-200",
         "Y": "120",
         "Prerequisite": "None",
         "ElementType": "Display",
-        "Displaying": "Money",
+        "Displaying": "Money"
       }
     }
   },
@@ -143,6 +143,16 @@
         "BroadcastName": "New Game",
         "BroadcastData": "Continue"
       }
-    }
+    },
+  "PauseMenu": {
+    "1": {
+        "X": "0",
+        "Y": "-70",
+        "Prerequisite": "None",
+        "ElementType": "Button",
+        "Variable": "GameState",
+        "Value": "Menus"
+      }
+  }
   }
 }
