@@ -154,5 +154,42 @@
         "Value": "Menus"
       }
   }
+  },
+  "WeaponData": {
+    "1": {
+      "Name": "Pistol",
+      "Description": "A basic semi-automatic pistol to start with. Not very strong, but it gets the job done. Good for the start of runs.",
+      "Class": "Ranged",
+      "Subclass": "Gun",
+      "Type": "Pistol",
+      "Element": "Tactical",
+      "Price": "40",
+      "Starter": "Sergeant David",
+      "Damage": "4",
+      "Accuracy": "2.50",
+      "Range": "15",
+      "ProjectileSpeed": "10",
+      "FiringType": "Semi",
+      "FireRate": "0.4",
+      "ReloadTime": "1.2",
+      "MaxAmmo": "10"
+    },
+    "2": {
+      "Name": "Combat Pistol",
+      "Description": "A faster alternative to the Semi-Pistol. Trade less damage for faster fire rate, higher mag size, and more accuracy.",
+      "Class": "Ranged",
+      "Subclass": "Gun",
+      "Type": "Pistol",
+      "Element": "Tactical",
+      "Price": "200",
+      "Damage": "3",
+      "Accuracy": "2",
+      "Range": "14.5",
+      "ProjectileSpeed": "10",
+      "FiringType": "Semi",
+      "FireRate": "0.3",
+      "ReloadTime": "1",
+      "MaxAmmo": "15"
+    }
   }
 }
